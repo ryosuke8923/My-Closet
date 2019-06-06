@@ -1,0 +1,50 @@
+<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+
+<p id="notice"><%= notice %></p>
+
+<h1>My Closet</h1>
+
+<br><br>
+<p>検索</p>
+<%= form_tag(ideas_path, :method => 'get') do %>
+  <%= text_field_tag :search %>
+  <%= submit_tag 'Search', :name => nil%>
+<% end %>
+
+<br>
+
+<table class="Clothes">
+  <tbody>
+    <% i = 0.to_i %>
+    <% @ideas.each do |idea| %>
+      <% if i % 3 == 0%>
+        <tr>
+      <% end %>
+      <% while i < 3 %>
+        <td><%= link_to (image_tag(idea.picture_url, width: 250) if idea.picture.present?), idea %></td>
+        <% i = i + 1.to_i %>
+        <% break %>
+      <% end %>
+      <% if i == 3.to_i%>
+          </tr>
+          <% i = 0%>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<div class="container">
+  <h4>
+    <%= link_to 'New Idea', new_idea_path, :class =>"btn btn-default"%>
+  </h4>
+</div>
+
+<% if false%>
+<td><%= idea.name %></td>
+<td><%= idea.description %></td>
+<td><%= image_tag(idea.picture_url, width: 100) if idea.picture.present? %></td>
+<td><%= link_to 'Show', idea %></td>
+<td><%= link_to 'Edit', edit_idea_path(idea) %></td>
+<td><%= link_to 'Delete', idea, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+<% end %>
